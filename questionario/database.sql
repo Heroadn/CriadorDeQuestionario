@@ -1,5 +1,5 @@
-create schema zadmin_quiz;
-use zadmin_quiz;
+create schema quiz;
+use quiz;
 
 create table questionario(
 	id INTEGER PRIMARY KEY AUTO_INCREMENT,
@@ -20,7 +20,5 @@ create table resposta(
     id_pergunta INTEGER,
     FOREIGN KEY (id_pergunta) references pergunta(id)
 );
-
-insert into questionario(nome) VALUES("MATEMATICA");
 
 
