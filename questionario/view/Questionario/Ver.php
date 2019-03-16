@@ -10,6 +10,7 @@
 	$questionario = null;
 	$perguntas = null;
 	$respostas = null;
+	session_start();
 	
 	if (isset($_GET['q'])) {
 		$nome = filter_input(INPUT_GET,'q',FILTER_SANITIZE_SPECIAL_CHARS);
@@ -17,12 +18,21 @@
 		
 		if(!empty($questionario->id)){
 			$perguntas = $questionario->getPerguntas();
+			
+			if(isset($_SESSION['Q'.$questionario->id])){
+				/*Se o Usuario já realizou o questionario*/
+				if($_SESSION['Q'.$questionario->id] == 1){
+					Header('Location:Listar.php?message=5');
+				}
+			}
 		}
 	}else{
 		Header('Location:Listar.php');
 	}
 
 	if ($_SERVER['REQUEST_METHOD'] == 'POST'){
+		$_SESSION['Q'.$questionario->id] = true;
+		
 		foreach($perguntas as $pergunta){
 			$button =  filter_input(INPUT_POST,'R'.$pergunta->id,FILTER_SANITIZE_NUMBER_INT);
 			$resposta = DaoResposta::findById($button);
@@ -49,12 +59,17 @@
 				<div class="panel-body">
 					<form class="form" method="post" accept-charset="UTF-8">
 						<?php 
+							$x = 0;
 							foreach($perguntas as $pergunta){
 								echo '<br>';
 								
 								$respostas = $pergunta->getRespostas();
 								if(!empty($respostas)){
-									echo '<div class="panel panel-info">';
+									if($x > 2){
+										echo '<div class="panel panel-info">';
+									}else{
+										echo '<div class="panel panel-success">';
+									}
 										echo '<div class="panel-heading">'. $pergunta->texto .'</div>';
 										echo '<div class="panel-body">';
 									
@@ -65,6 +80,7 @@
 											}
 										echo '</div>';
 									echo '</div>';
+									$x++;
 								}
 							}
 						?>

@@ -34,6 +34,20 @@
 						echo '</div>';
 					}
 				}
+				
+				if($_GET['message'] == 4){
+						echo '<div class="alert alert-danger fade in" id="alert">';
+							echo 'Questionario não encontrado.';
+							echo '<button type="button" class="close" data-dismiss="alert">&times;</button>';
+						echo '</div>';
+				}
+				
+				if($_GET['message'] == 5){
+						echo '<div class="alert alert-danger fade in" id="alert">';
+							echo 'Questionario já foi realizado.';
+							echo '<button type="button" class="close" data-dismiss="alert">&times;</button>';
+						echo '</div>';
+				}
 			}
 		?>
 	
@@ -88,4 +102,9 @@
 			$("#alert").alert();
 		});
 	});  
+	
+	if ( window.location !== window.parent.location ) {
+		var oldURL = document.referrer;
+		 window.location = oldURL;
+	}
 </script>
