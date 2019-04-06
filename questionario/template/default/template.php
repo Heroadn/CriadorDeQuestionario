@@ -3,8 +3,7 @@
 		public $_title = '1aasda';
 
 		 public static function getHeaders($title) {
-			//
-			var path = '/questionario';
+			$path = '/questionario';
 			 
 			echo "<head>\n";
 			echo '		<title>' . $title . "</title>\n";
